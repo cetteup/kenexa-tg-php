@@ -12,10 +12,8 @@ class ScrapeClient {
     private $client;
 
     private $requests_made;
-    private $search_filters;
 
     const API_ROOT = 'https://krb-sjobs.brassring.com/TgNewUI/Search/Ajax/';
-    const JOBS_PER_PAGE = 50;
 
     public function __construct($tg_partner_id, $tg_site_id, $tg_question_name_map = [], $timeout = 6.0)
     {
@@ -135,10 +133,8 @@ class ScrapeClient {
         $params = array_merge(['partnerId' => $this->config['tg_partner_id'], 'siteId' => $this->config['tg_site_id']], $params);
 
         try {
-            echo "Sending request\n";
             $response = $this->client->request($method, $endpoint, [$param_type => $params]);
             $this->requests_made++;
-            echo "Got response\n";
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 $response = $e->getResponse();
