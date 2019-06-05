@@ -46,7 +46,7 @@ class ScrapeClient {
     /**
     * Retrieves all available power search filters for current tg
     */
-    public function getPowerSearchFilters()
+    public function fetchPowerSearchFilters()
     {
         $search_filters = $this->send_request('POST', 'PowerSearch', 'json');
 
@@ -61,7 +61,7 @@ class ScrapeClient {
     function extractAutocompleteFilters($search_filters)
     {
         $autocomplete_filters = array_filter((array) $search_filters, function ($search_filter) {
-            return $search_filter['IsAutoComplete'];
+            return array_key_exists('IsAutoComplete', $search_filter) && $search_filter['IsAutoComplete'];
         });
 
         return $autocomplete_filters;
@@ -73,7 +73,7 @@ class ScrapeClient {
     * @param int $parent_question_id Id of parent filter/question
     * @return array Filter/question options (max. 10)
     */
-    private function fetchAutoCompleteOptions($question_id, $parent_question_id, $search_string, $known_options = [])
+    public function fetchAutoCompleteOptions($question_id, $parent_question_id, $search_string, $known_options = [])
     {
         $options = $this->send_request('POST', 'PowerSearchAutoComplete', 'form_params', [
             'partnerId' => $this->config['tg_partner_id'],
@@ -90,7 +90,7 @@ class ScrapeClient {
     /**
     * Restructure options array into [OptionName] => OptionValue format
     */
-    private function restructureOptionsArray($options_array)
+    public function restructureOptionsArray($options_array)
     {
     	$restructured_array = [];
 
@@ -104,7 +104,7 @@ class ScrapeClient {
     /**
     * Get a single page of search results
     */
-    function performAdvancedSearch($page_number, $search_options = []) {
+    public function fetchAdvancedSearchResults($page_number, $search_options = []) {
 		$jobs = $this->send_request('POST', 'ProcessSortAndShowMoreJobs', 'json', [
 			'partnerId' => $this->config['tg_partner_id'],
 			'siteId' => $this->config['tg_site_id'],
@@ -159,9 +159,11 @@ class ScrapeClient {
             }
         }
 
+        $decoded_response = json_decode($response->getBody(),true);
+
         return new ResponseArray(
             $response->getHeaders(),
-            json_decode($response->getBody(),true)
+            is_array($decoded_response) ? $decoded_response : []
         );
     }
 }
