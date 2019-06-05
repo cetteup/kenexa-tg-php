@@ -1,4 +1,4 @@
 <?php
-namespace Diza\TGScraper;
+namespace Cetteup\KenexaTG;
 
 class ClientException extends \Exception {}

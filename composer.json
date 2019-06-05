@@ -1,5 +1,5 @@
 {
-  "name": "cette/kenexa-tg-php",
+  "name": "cetteup/kenexa-tg-php",
   "description": "Unofficial PHP HTTP client to access Kenexa's TG API",
   "keywords": ["Kenexa", "TG", "talent gateway", "http", "web service", "client", "HTTP client"],
   "license": "MIT",

@@ -1,5 +1,5 @@
 <?php
-namespace Diza\TGScraper;
+namespace Cetteup\KenexaTG;
 
 use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\RequestException;
 
-class ScrapeClient {
+class HttpClient {
     private $config;
     private $client;
 

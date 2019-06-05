@@ -1,5 +1,5 @@
 <?php
-namespace Diza\TGScraper;
+namespace Cetteup\KenexaTG;
 
 class ResponseArray extends \ArrayObject
 {
