@@ -127,6 +127,21 @@ class ScrapeClient {
     	return $jobs;
     }
 
+    /**
+    * Job job details for a specified job id
+    */
+    public function fetchJobDetails($jobId) {
+        $jobDetails = $this->send_request('POST', 'JobDetails', 'json', [
+            'configMode' => '',
+            'jobSiteId' => $this->config['tg_site_id'],
+            'jobid' => $jobId,
+            'partnerId' => $this->config['tg_partner_id'],
+            'siteId' => $this->config['tg_site_id']
+        ]);
+
+        return $jobDetails;
+    }
+
     private function send_request($method, $endpoint, $param_type, $params = [], $return_response = true)
     {
         // Add tg partner and site id to params
